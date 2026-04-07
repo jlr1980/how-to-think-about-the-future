@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Think About the Future — A Companion to The Great Simplification</title>
+<meta name="description" content="An interactive companion to Nate Hagens' How to Think About the Future series. Explore the four scenario lenses, build composite worlds, and find your own orientation toward the more-than-human predicament.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=Newsreader:opsz,wght@6..72,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* Color tokens — warm cream / TGS publication palette */
+  --bg:           #f4ece0;
+  --bg-elevated:  #ede2cc;
+  --bg-card:      #ede2cc;
+  --bg-card-2:    #e2d4b8;
+  --border:       #d4c5a8;
+  --border-strong:#b5a17e;
+  --text:         #1c1814;
+  --text-muted:   #5b5040;
+  --text-dim:     #8a7d68;
+  --gold:         #c8731f;       /* warm amber — TGS Frankly accent */
+  --gold-bright:  #e08530;
+  --forest:       #2d4a3a;       /* deep forest secondary */
+  --terracotta:   #a84a25;
+  --ochre:        #a8841c;
+  --slate:        #5b6770;
+
+  /* Type */
+  --display: "Fraunces", Georgia, serif;
+  --body: "Newsreader", Georgia, serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Layout */
+  --max-prose: 700px;
+  --max-wide: 1080px;
+  --max-full: 1240px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  font-family: var(--body);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+/* Subtle warm atmospheric texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(200, 115, 31, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(45, 74, 58, 0.03) 0%, transparent 50%);
+}
+
+/* ============================================================
+   HERO (above sticky nav, scrolls away)
+============================================================ */
+.page-hero {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 88px 32px 72px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.page-hero::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: var(--gold);
+  margin: 48px auto 0;
+}
+
+.hero-inner {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+
+.hero-eyebrow a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+  transition: border-color 0.2s;
+}
+.hero-eyebrow a:hover { border-color: var(--gold); }
+
+.hero-title {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+  font-weight: 400;
+  font-size: clamp(48px, 7.5vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -0.018em;
+  color: var(--text);
+  margin: 0 0 22px;
+}
+
+.hero-title em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.hero-sub {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(18px, 2vw, 22px);
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.45;
+}
+
+/* ============================================================
+   STICKY HEADER & NAV
+============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(244, 236, 224, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: var(--max-full);
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand-mini {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+.brand-mini:hover { color: var(--gold); }
+
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: none;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+
+.tab-btn:hover {
+  color: var(--gold);
+  border-color: var(--border);
+}
+
+.tab-btn.active {
+  color: var(--bg);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.tgs-link {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tgs-link:hover {
+  color: var(--gold);
+  border-color: var(--border-strong);
+}
+
+/* ============================================================
+   SECTIONS
+============================================================ */
+main {
+  position: relative;
+  z-index: 2;
+}
+
+.episode {
+  display: none;
+  padding: 64px 32px 120px;
+  animation: fadeIn 0.5s ease;
+}
+
+.episode.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ep-inner {
+  max-width: var(--max-prose);
+  margin: 0 auto;
+}
+
+.ep-inner.wide { max-width: var(--max-wide); }
+.ep-inner.full { max-width: var(--max-full); }
+
+/* Episode header */
+.ep-header {
+  text-align: center;
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ep-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.ep-title {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.ep-title em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  color: var(--gold);
+}
+
+.ep-subtitle {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Body prose */
+.prose p {
+  margin-bottom: 1.4em;
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.prose > p:not(.lede):first-of-type::first-letter,
+.prose .lede + p::first-letter {
+  font-family: var(--display);
+  font-size: 4.6em;
+  font-weight: 400;
+  font-variation-settings: "SOFT" 0;
+  float: left;
+  line-height: 0.85;
+  margin: 0.06em 0.08em -0.05em 0;
+  color: var(--gold);
+}
+
+.prose .lede {
+  font-size: 22px;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--text);
+  margin-bottom: 2em;
+}
+
+.section-rule {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 64px auto;
+  border: none;
+}
+
+h2.section-h {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 30, "opsz" 144;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 56px 0 24px;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+
+h3.sub-h {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 40px 0 16px;
+  font-weight: 500;
+}
+
+/* Pull quote / card */
+.pullquote {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.3;
+  color: var(--gold-bright);
+  border-left: 2px solid var(--gold);
+  padding: 8px 0 8px 28px;
+  margin: 40px 0;
+}
+
+.principle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 48px 0;
+}
+
+.principle {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 28px 26px 30px;
+  position: relative;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.principle:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.principle-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.principle-title {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 30;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.principle-body {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   GRID EXPLORER (Episode 2)
+============================================================ */
+.grid-explorer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin: 48px 0;
+}
+
+.grid-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 28px 26px;
+}
+
+.grid-card h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.grid-card .grid-name {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 30;
+  font-weight: 500;
+  font-size: 22px;
+  margin-bottom: 18px;
+  color: var(--text);
+}
+
+.quad-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 6px;
+  margin: 18px 0 14px;
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.quad {
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  padding: 14px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.quad:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(200, 115, 31, 0.08);
+}
+
+.quad.selected {
+  border-color: var(--gold);
+  background: rgba(200, 115, 31, 0.10);
+  color: var(--gold-bright);
+}
+
+.axis-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.axis-x { display: flex; justify-content: space-between; margin-top: 4px; }
+.axis-y { display: flex; flex-direction: column; align-items: stretch; }
+
+.grid-detail {
+  min-height: 60px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  margin-top: 14px;
+}
+
+.grid-detail strong {
+  display: block;
+  color: var(--gold-bright);
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+/* ============================================================
+   WORLD BUILDER (Episode 3)
+============================================================ */
+.builder-intro {
+  text-align: center;
+  margin: 0 auto 48px;
+  max-width: 620px;
+  font-size: 18px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.builder {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin: 32px 0;
+}
+
+@media (min-width: 900px) {
+  .builder {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.selector-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 24px;
+}
+
+.selector-card h3 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.selector-card .sel-name {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 30;
+  font-weight: 500;
+  font-size: 19px;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.opt {
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  padding: 12px 10px;
+  cursor: pointer;
+  text-align: center;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opt:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.opt.active {
+  border-color: var(--gold);
+  background: rgba(200, 115, 31, 0.12);
+  color: var(--gold-bright);
+}
+
+.builder-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 32px 0;
+}
+
+.btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  background: none;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  padding: 12px 22px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.btn.primary {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+}
+
+.btn.primary:hover {
+  background: var(--gold-bright);
+  border-color: var(--gold-bright);
+  color: var(--bg);
+}
+
+.world-output {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  padding: 40px 36px;
+  margin-top: 32px;
+  min-height: 200px;
+  position: relative;
+}
+
+.world-output.empty {
+  text-align: center;
+  color: var(--text-dim);
+  font-style: italic;
+  padding: 60px 36px;
+  font-family: var(--display);
+  font-size: 17px;
+}
+
+.world-name {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 1.1;
+  color: var(--gold-bright);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.world-name em {
+  font-style: italic;
+}
+
+.world-stack {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.world-block {
+  margin: 22px 0;
+}
+
+.world-block h4 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.world-block p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.plausibility {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  margin-top: 18px;
+  border: 1px solid;
+}
+
+.plausibility.canonical { color: var(--gold); border-color: var(--gold); }
+.plausibility.stable { color: var(--forest); border-color: var(--forest); }
+.plausibility.fragile { color: var(--ochre); border-color: var(--ochre); }
+.plausibility.unstable { color: var(--terracotta); border-color: var(--terracotta); }
+.plausibility.aspirational { color: var(--slate); border-color: var(--slate); }
+
+/* ============================================================
+   ASYMMETRY VIZ + WORKSHEET (Episode 4)
+============================================================ */
+.asymmetry-viz {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 36px 32px;
+  margin: 40px 0;
+}
+
+.asymmetry-viz h3 {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 30;
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.asymmetry-viz .caption {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.asy-bars {
+  display: grid;
+  gap: 18px;
+  margin: 18px 0;
+}
+
+.asy-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 80px;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.asy-bar {
+  height: 22px;
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.asy-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 100%);
+  transition: width 1.2s ease;
+}
+
+.asy-fill.loss { background: linear-gradient(90deg, var(--terracotta) 0%, #c8775a 100%); }
+
+.asy-value {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--gold);
+  text-align: right;
+}
+
+.irrev-list {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 32px 30px;
+  margin: 40px 0;
+}
+
+.irrev-list h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+
+.irrev-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 6px 24px;
+}
+
+.irrev-item {
+  font-family: var(--display);
+  font-size: 16px;
+  color: var(--text);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.irrev-item .recovery {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.worksheet {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  padding: 36px 32px;
+  margin: 48px 0;
+}
+
+.worksheet h3 {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 30;
+  font-size: 22px;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.worksheet .ws-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.ws-field {
+  margin: 22px 0;
+}
+
+.ws-field label {
+  display: block;
+  font-family: var(--display);
+  font-style: italic;
+  font-variation-settings: "SOFT" 100;
+  font-size: 19px;
+  color: var(--gold-bright);
+  margin-bottom: 8px;
+}
+
+.ws-field textarea {
+  width: 100%;
+  min-height: 80px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding: 14px 16px;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.ws-field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.ws-note {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  margin-top: 16px;
+  font-style: italic;
+}
+
+/* ============================================================
+   SPECTRUMS (Episode 5)
+============================================================ */
+.spectrum-tool {
+  margin: 40px 0;
+}
+
+.spectrum-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 24px 28px;
+  margin: 14px 0;
+  transition: border-color 0.2s;
+}
+
+.spectrum-row:hover {
+  border-color: var(--border-strong);
+}
+
+.spec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+  gap: 16px;
+}
+
+.spec-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.spec-title {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 30;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+}
+
+.spec-poles {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.spec-poles .left { color: var(--text-muted); }
+.spec-poles .right { color: var(--text-muted); }
+
+.spec-slider-wrap {
+  position: relative;
+}
+
+.spec-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  outline: none;
+  cursor: pointer;
+}
+
+.spec-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--gold);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--gold);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.spec-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 1px var(--gold-bright), 0 0 12px rgba(200, 115, 31, 0.4);
+}
+
+.spec-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--gold);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.spec-tick {
+  display: block;
+  width: 1px;
+  height: 6px;
+  background: var(--border-strong);
+  position: absolute;
+  top: 7px;
+  pointer-events: none;
+}
+
+.spectrum-actions {
+  text-align: center;
+  margin: 36px 0;
+}
+
+.spectrum-output {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  padding: 40px 36px;
+  margin: 32px 0;
+  display: none;
+}
+
+.spectrum-output.visible { display: block; }
+
+.profile-name {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 60, "opsz" 144;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 34px;
+  line-height: 1.1;
+  color: var(--gold-bright);
+  margin-bottom: 6px;
+}
+
+.profile-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+
+.profile-body {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+.profile-body p { margin-bottom: 14px; }
+
+.profile-prompts {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  margin-top: 24px;
+}
+
+.profile-prompts h4 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.profile-prompts ol {
+  list-style: none;
+  counter-reset: prompt;
+}
+
+.profile-prompts li {
+  counter-increment: prompt;
+  position: relative;
+  padding-left: 32px;
+  margin-bottom: 14px;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.profile-prompts li::before {
+  content: counter(prompt);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* ============================================================
+   SOURCES
+============================================================ */
+.sources-group {
+  margin: 40px 0;
+}
+
+.sources-group h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.source-item {
+  margin: 16px 0;
+  padding-left: 18px;
+  border-left: 1px solid var(--border);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.source-item .src-author {
+  font-family: var(--display);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.source-item .src-title {
+  font-style: italic;
+  color: var(--text);
+}
+
+.source-item .src-meta {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 60px 32px;
+  margin-top: 80px;
+  background: var(--bg-elevated);
+  position: relative;
+  z-index: 2;
+}
+
+.footer-inner {
+  max-width: var(--max-prose);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-inner p {
+  font-family: var(--body);
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.footer-inner .credit {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  margin-top: 28px;
+}
+
+.footer-inner a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+
+.footer-inner a:hover {
+  border-bottom-color: var(--gold);
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 768px) {
+  .page-hero { padding: 60px 20px 50px; }
+  .page-hero::after { margin-top: 36px; }
+  .hero-title { font-size: 44px; }
+  .hero-eyebrow { font-size: 10px; margin-bottom: 22px; }
+  .header-inner {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+  .brand-mini { font-size: 9px; }
+  .tab-nav { justify-content: center; gap: 2px; flex-basis: 100%; order: 3; }
+  .tab-btn { padding: 6px 8px; font-size: 9px; }
+  .tgs-link { font-size: 9px; padding: 5px 8px; }
+  .episode { padding: 50px 20px 80px; }
+  .ep-title { font-size: 32px; }
+  .pullquote { font-size: 22px; padding-left: 20px; }
+  .grid-explorer { grid-template-columns: 1fr; }
+  .options { grid-template-columns: 1fr 1fr; }
+  .world-output { padding: 28px 22px; }
+  .world-name { font-size: 28px; }
+  .prose p { font-size: 17px; }
+  .principle-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">An interactive companion to the Frankly series on <a href="https://www.thegreatsimplification.com" target="_blank" rel="noopener">The Great Simplification</a></div>
+    <h1 class="hero-title">How to Think <em>About</em> the Future</h1>
+    <p class="hero-sub">A method for navigating the more-than-human predicament when you can't predict what's coming.</p>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand-mini" href="#" onclick="showTab('ep1'); return false;">HTTAF · companion</a>
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="ep1">01 · Aerial View</button>
+      <button class="tab-btn" data-tab="ep2">02 · The Lenses</button>
+      <button class="tab-btn" data-tab="ep3">03 · Build a World</button>
+      <button class="tab-btn" data-tab="ep4">04 · Shortfall</button>
+      <button class="tab-btn" data-tab="ep5">05 · Spectrums</button>
+      <button class="tab-btn" data-tab="sources">Sources</button>
+    </nav>
+    <a class="tgs-link" href="https://www.thegreatsimplification.com" target="_blank" rel="noopener">TGS ↗</a>
+  </div>
+</header>
+
+<main>
+
+<!-- EPISODE 1 -->
+<section class="episode active" id="ep1">
+  <div class="ep-inner">
+    <div class="ep-header">
+      <span class="ep-num">Episode 01</span>
+      <h1 class="ep-title">The <em>Aerial</em> View</h1>
+      <p class="ep-subtitle">How to think about the future when you can't predict it.</p>
+    </div>
+    <div id="ep1-content"></div>
+  </div>
+</section>
+
+<!-- EPISODE 2 -->
+<section class="episode" id="ep2">
+  <div class="ep-inner wide">
+    <div class="ep-header">
+      <span class="ep-num">Episode 02</span>
+      <h1 class="ep-title">The <em>Lenses</em></h1>
+      <p class="ep-subtitle">Four grids that capture the dimensions of any plausible future.</p>
+    </div>
+    <div id="ep2-content"></div>
+  </div>
+</section>
+
+<!-- EPISODE 3 -->
+<section class="episode" id="ep3">
+  <div class="ep-inner wide">
+    <div class="ep-header">
+      <span class="ep-num">Episode 03</span>
+      <h1 class="ep-title">Build a <em>World</em></h1>
+      <p class="ep-subtitle">A scenario is not one headline. It's a stack. Compose your own and see what comes out.</p>
+    </div>
+    <div id="ep3-content"></div>
+  </div>
+</section>
+
+<!-- EPISODE 4 -->
+<section class="episode" id="ep4">
+  <div class="ep-inner">
+    <div class="ep-header">
+      <span class="ep-num">Episode 04</span>
+      <h1 class="ep-title">Shortfall &amp; <em>Robust Action</em></h1>
+      <p class="ep-subtitle">Some losses can be rebuilt. Some cannot. The asymmetry that should reorganize how we plan.</p>
+    </div>
+    <div id="ep4-content"></div>
+  </div>
+</section>
+
+<!-- EPISODE 5 -->
+<section class="episode" id="ep5">
+  <div class="ep-inner">
+    <div class="ep-header">
+      <span class="ep-num">Episode 05</span>
+      <h1 class="ep-title">The <em>Spectrums</em></h1>
+      <p class="ep-subtitle">After you absorb all of this, where do you sit? Seven dimensions of personal response.</p>
+    </div>
+    <div id="ep5-content"></div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="episode" id="sources">
+  <div class="ep-inner">
+    <div class="ep-header">
+      <span class="ep-num">Reference</span>
+      <h1 class="ep-title"><em>Sources</em> &amp; further reading</h1>
+      <p class="ep-subtitle">The intellectual lineage behind the series, with pointers to go deeper.</p>
+    </div>
+    <div id="sources-content"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>This is a companion to Nate Hagens' <em>How to Think About the Future</em> Frankly series on <a href="https://www.thegreatsimplification.com" target="_blank" rel="noopener">The Great Simplification</a>.</p>
+    <p>The interactive tools are exploratory aids, not predictions. The frameworks belong to Nate. The bugs belong to us.</p>
+    <p class="credit">Built for The Great Simplification · ISEOF</p>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function showTab(id) {
+  document.querySelectorAll('.episode').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.dataset.tab === id) b.classList.add('active');
+  });
+  window.scrollTo && window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.tab-btn').forEach(b => {
+  b.addEventListener('click', () => showTab(b.dataset.tab));
+});
+
+// ============================================================
+// EPISODE 1: AERIAL VIEW (manifesto)
+// ============================================================
+document.getElementById('ep1-content').innerHTML = `
+<div class="prose">
+  <p class="lede">Most people are trained to think about the future like a forecast. A single line on a chart. A point estimate. A best guess. That works for narrow, short-term, well-understood systems. It fails for the system we actually live inside.</p>
+
+  <p>The future of civilization is the most complex, most coupled, most surprise-prone system there is. It can't be predicted. It can be navigated. The job is not to guess which point in the space of possibilities is correct. It's to understand the landscape well enough to move through it.</p>
+
+  <p>This series is a method for that. Not a prediction. A discipline. A way of holding several possible futures in mind at the same time, so that whichever one arrives, you've already begun to prepare for it.</p>
+</div>
+
+<div class="pullquote">"I don't know which future is coming. And neither do they."</div>
+
+<h2 class="section-h">Six principles for thinking under uncertainty</h2>
+
+<div class="principle-grid">
+  <div class="principle">
+    <span class="principle-num">01</span>
+    <div class="principle-title">The future is not a single forecast</div>
+    <div class="principle-body">It's a space of possibilities. Forecasts work for narrow, short-term, well-understood systems. They fail for complex coupled systems where surprises dominate.</div>
+  </div>
+  <div class="principle">
+    <span class="principle-num">02</span>
+    <div class="principle-title">Complex systems lurch, they don't glide</div>
+    <div class="principle-body">Stability, stability, stability — then a phase shift. Ice sheets, political systems, supply chains, financial trust. The Roman philosopher Seneca put it simply: increases are slow, ruin is rapid.</div>
+  </div>
+  <div class="principle">
+    <span class="principle-num">03</span>
+    <div class="principle-title">Risks arrive in bundles</div>
+    <div class="principle-body">Energy affects geopolitics. Geopolitics affects supply chains. Supply chains affect inflation. Inflation affects political legitimacy. You can't plan for challenges one at a time. You have to think in stacks.</div>
+  </div>
+  <div class="principle">
+    <span class="principle-num">04</span>
+    <div class="principle-title">Single-story thinking is the human default</div>
+    <div class="principle-body">Religion is the oldest version. For most of history, almost every person on Earth was raised inside one story. Holding several plausible futures at once is a thing we have mostly never asked the human nervous system to do.</div>
+  </div>
+  <div class="principle">
+    <span class="principle-num">05</span>
+    <div class="principle-title">Underneath the systems are stories</div>
+    <div class="principle-body">The story that progress is the natural shape of history. The story that humans are separate from nature. The story that more is better. These are doing more work in shaping what people think is possible than any of the data.</div>
+  </div>
+  <div class="principle">
+    <span class="principle-num">06</span>
+    <div class="principle-title">Constrained is very different from determined</div>
+    <div class="principle-body">The physics and ecology constrain what is possible. The trajectory has real boundaries. But the difference between the best and worst version of what is coming is enormous, and that difference is mostly determined by what people do.</div>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<div class="prose">
+  <h2 class="section-h">What this companion is for</h2>
+  <p>The Frankly series is a guided tour through the method. This site is the workshop. The grids on Episode 02 are interactive. The world builder on Episode 03 lets you compose your own composite future from the same building blocks Nate uses. Episode 04 is a worksheet. Episode 05 is a self-assessment. None of it predicts anything. All of it is meant to help you practice the discipline.</p>
+  <p>Start with the lenses.</p>
+</div>
+`;
+
+// ============================================================
+// EPISODE 2: THE LENSES (grid explorer)
+// ============================================================
+const grids = [
+  {
+    id: 'econ',
+    label: '01 / Economic',
+    name: 'Economic Direction',
+    axisX: ['Regenerative', 'Extractive'],
+    axisY: ['Growth', 'Contraction'],
+    quads: {
+      tl: { name: 'Green Growth', detail: 'The economy expands while ecological impact declines per unit of activity. Renewables scale, circular economy gains traction, decarbonization outruns growth in throughput. The dominant aspiration of most Western governments and international institutions.' },
+      tr: { name: 'Mordor', detail: 'The economy expands through extraction, concentration, and externalized costs. GDP rises, markets perform, technology advances. Underneath, the foundations are being consumed. The system runs by liquidating natural capital and calling it income.' },
+      bl: { name: 'Great Simplification', detail: 'The economy contracts, but with enough coordination, fairness, and intentionality that the descent is managed. Redesign, repair, deliberate choices about what to protect and what to let go. Not painless, but navigated.' },
+      br: { name: 'Mad Max', detail: 'The economy contracts and coordination fails. Scarcity turns predatory. Systems fragment. Local power fills the vacuum. Not necessarily a single apocalyptic event, but a steady ratchet of decline without collective response.' }
+    }
+  },
+  {
+    id: 'power',
+    label: '02 / Power',
+    name: 'Power & Distribution',
+    axisX: ['Broad gains', 'Narrow gains'],
+    axisY: ['Broad power', 'Concentrated power'],
+    quads: {
+      tl: { name: 'Civic Ideal', detail: 'People participate meaningfully in decisions and outcomes reach most of the population. A shared floor and a sense of being in it together. Where functional democracies with strong public goods live during growth.' },
+      tr: { name: 'Captured Democracy', detail: 'Everyone votes, institutions are nominally democratic, but the real gains flow to a small class. Lobbyists write the laws. Regulatory capture is pervasive. The formal structure says shared power, the lived experience says rigged. Where much of the West sits today.' },
+      bl: { name: 'Stewardship Deal', detail: 'A small group holds decision-making authority, but outcomes are broadly distributed because the rulers choose to, or need to, keep the population healthy. Singapore is a modern example. Stable, dependent on the continued competence of whoever is at the top.' },
+      br: { name: 'Extraction', detail: 'A small group both rules and takes. Kleptocracy. Resource curse states. Oligarchic authoritarianism. During contraction, the most dangerous quadrant: no voice, no share, where violent resistance becomes most likely.' }
+    }
+  },
+  {
+    id: 'geo',
+    label: '03 / Geopolitics',
+    name: 'Geopolitics',
+    axisX: ['Interdependent', 'Self-sufficient'],
+    axisY: ['Cooperative', 'Adversarial'],
+    quads: {
+      tl: { name: 'Globalization Ideal', detail: 'Trade flows freely. Supply chains are long and efficient. Shared institutions manage disputes. What the world aimed at from roughly 1990 to 2015. Efficient but fragile. Any disruption propagates everywhere.' },
+      tr: { name: 'Friendly Neighbors', detail: 'Regional blocs that trade with each other and maintain diplomatic relations but don\'t depend on each other for survival. Slower, less efficient, more redundant. Possibly the most stable long-term configuration under energy contraction.' },
+      bl: { name: 'Brittle Interdependence', detail: 'Hostile relations between powers that still depend on each other\'s resources, chokepoints, and supply chains. Every economic node becomes a potential weapon. Strait of Hormuz as leverage. Where we are right now.' },
+      br: { name: 'Cold War 2.0', detail: 'Two or more blocs that have decoupled enough to survive independently but are hostile to each other. Lower risk of supply chain cascade. Paradoxically higher risk of direct military confrontation, because the deterrent of mutual damage is reduced.' }
+    }
+  },
+  {
+    id: 'earth',
+    label: '04 / Earth System',
+    name: 'Earth System',
+    axisX: ['Biosphere intact', 'Biosphere unraveling'],
+    axisY: ['Mild climate stress', 'Severe climate stress'],
+    quads: {
+      tl: { name: 'Strained but Workable', detail: 'Adaptation is hard. Extremes more frequent. But systems still mostly function. Yields lower and more variable, food production viable. There is still some slack in the system. Mistakes are survivable.' },
+      tr: { name: 'Quiet Unraveling', detail: 'Weather might not feel apocalyptic day to day. But the living world thins out underneath. Soils degrade. Pollinators decline. Fisheries shrink. Insidious because it doesn\'t make headlines. The slow erosion of carrying capacity.' },
+      bl: { name: 'Hothouse Triage', detail: 'Constant emergency management. Major adaptation infrastructure required. Society is always responding, always rebuilding. Resources perpetually diverted from development to recovery. Some ecosystems protected enough to provide partial buffering.' },
+      br: { name: 'Cascading Breakdown', detail: 'Multiple systems failing at once. Food instability across major producing regions. Mass migration driven by combined heat, drought, and agricultural failure. Less capacity to recover between events. Where overshoot and collapse lives in ecological terms.' }
+    }
+  }
+];
+
+function renderGrids() {
+  const html = `
+    <div class="prose">
+      <p class="lede">Each grid is a 2×2. Four quadrants. These are spectrums, not boxes — no country sits neatly in one corner. But our minds need handles. Click any quadrant to read what it means.</p>
+    </div>
+    <div class="grid-explorer">
+      ${grids.map(g => `
+        <div class="grid-card" data-grid="${g.id}">
+          <h3>${g.label}</h3>
+          <div class="grid-name">${g.name}</div>
+          <div class="quad-2x2">
+            ${['tl','tr','bl','br'].map(pos => `
+              <div class="quad" data-grid="${g.id}" data-pos="${pos}">${g.quads[pos].name}</div>
+            `).join('')}
+          </div>
+          <div class="axis-x">
+            <span class="axis-label">← ${g.axisX[0]}</span>
+            <span class="axis-label">${g.axisX[1]} →</span>
+          </div>
+          <div class="grid-detail" id="detail-${g.id}">
+            <em style="color:var(--text-dim);font-family:var(--display);">Click a quadrant to explore.</em>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <hr class="section-rule">
+    <div class="prose" style="text-align:center;">
+      <p style="color:var(--text-muted);font-style:italic;font-size:18px;">A scenario is not one headline. It's a stack. Next: <a href="#" onclick="showTab('ep3');return false;" style="color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold);">build a world from the four grids →</a></p>
+    </div>
+  `;
+  document.getElementById('ep2-content').innerHTML = html;
+
+  document.querySelectorAll('#ep2-content .quad').forEach(q => {
+    q.addEventListener('click', () => {
+      const gid = q.dataset.grid;
+      const pos = q.dataset.pos;
+      const grid = grids.find(g => g.id === gid);
+      const quad = grid.quads[pos];
+      document.querySelectorAll(`#ep2-content .quad[data-grid="${gid}"]`).forEach(x => x.classList.remove('selected'));
+      q.classList.add('selected');
+      document.getElementById('detail-'+gid).innerHTML = `<strong>${quad.name}</strong>${quad.detail}`;
+    });
+  });
+}
+renderGrids();
+
+// ============================================================
+// EPISODE 3: WORLD BUILDER
+// ============================================================
+const dimensions = [
+  {
+    id: 'econ',
+    label: 'Economic Direction',
+    options: [
+      { id: 'green',  name: 'Green Growth',          headline: 'the economy expands while ecological impact per unit declines', daily: 'consumer abundance continues, with cleaner production methods and continued technology rollout', fragility: 'depends on decoupling that has not yet been demonstrated at the scale required' },
+      { id: 'mordor', name: 'Mordor',                headline: 'the economy expands by extracting from people and ecosystems that can\'t fight back', daily: 'GDP rises, markets perform, technology advances, but the gains are captured and the foundations are being consumed', fragility: 'the ecological foundation eventually erodes until growth stops, usually messily and without preparation' },
+      { id: 'gs',     name: 'Great Simplification', headline: 'the economy contracts, but with enough coordination that the descent is managed', daily: 'material life is smaller, social life is richer, repair and care work matter more than financialization', fragility: 'requires sustained legitimacy during declining throughput, the hardest political condition to maintain' },
+      { id: 'madmax', name: 'Mad Max',               headline: 'the economy contracts and coordination fails', daily: 'scarcity turns predatory, systems fragment, local power fills the vacuum', fragility: 'no buffers, no slack, every setback potentially catastrophic' }
+    ]
+  },
+  {
+    id: 'power',
+    label: 'Power & Distribution',
+    options: [
+      { id: 'civic',     name: 'Civic Ideal',        headline: 'power and gains are both broadly shared', daily: 'people participate meaningfully and outcomes reach most of the population', fragility: 'requires deep social trust that is easily lost and slow to rebuild' },
+      { id: 'steward',   name: 'Stewardship Deal',   headline: 'a small group rules but outcomes are broadly distributed', daily: 'rationing and provision are administered from above and actually reach everyone', fragility: 'depends entirely on the continued competence and goodwill of whoever holds power' },
+      { id: 'captured',  name: 'Captured Democracy', headline: 'power looks shared but gains flow to a narrow class', daily: 'people vote, lobbyists write the laws, the formal structure says shared but the lived experience says rigged', fragility: 'the most unstable quadrant during contraction — people have voice enough to be furious, not power enough to change outcomes' },
+      { id: 'extract',   name: 'Extraction',         headline: 'a small group both rules and takes', daily: 'no voice, no share, no participation in the system\'s benefits', fragility: 'where violent resistance, revolution, or total breakdown becomes most likely' }
+    ]
+  },
+  {
+    id: 'geo',
+    label: 'Geopolitics',
+    options: [
+      { id: 'globi',  name: 'Globalization Ideal',     headline: 'cooperative relations and deep interdependence', daily: 'trade flows freely, supply chains long and efficient, shared institutions manage disputes', fragility: 'efficient but fragile — any disruption propagates everywhere because everyone depends on everyone' },
+      { id: 'friend', name: 'Friendly Neighbors',      headline: 'cooperative relations with regional self-sufficiency', daily: 'slower, less efficient, more redundant, with shocks contained at the regional level', fragility: 'urgency for global coordination on shared problems is lower, so collective action is harder' },
+      { id: 'brittle',name: 'Brittle Interdependence', headline: 'hostile relations but still economically intertwined', daily: 'every chokepoint becomes leverage, sanctions and supply chain weaponization are constant background noise', fragility: 'a single chokepoint failure cascades globally, as the Iran war is showing in real time' },
+      { id: 'coldwar',name: 'Cold War 2.0',            headline: 'hostile blocs that have decoupled enough to survive independently', daily: 'borders are hard, movement between blocs is restricted, each bloc manages its own resource base', fragility: 'lower cascade risk but paradoxically higher risk of direct military confrontation since the deterrent of mutual damage is reduced' }
+    ]
+  },
+  {
+    id: 'earth',
+    label: 'Earth System',
+    options: [
+      { id: 'workable', name: 'Strained but Workable', headline: 'moderate climate stress and a still-functional biosphere', daily: 'adaptation is hard but systems mostly function, yields lower and more variable but food production viable', fragility: 'still loaded with the legacy of crossed planetary boundaries, with shrinking margin for error' },
+      { id: 'quiet',    name: 'Quiet Unraveling',     headline: 'moderate climate stress with biosphere thinning underneath', daily: 'weather feels manageable but soils, pollinators, and fisheries decline year after year', fragility: 'insidious — doesn\'t make headlines until it\'s very advanced, then food production becomes structurally harder' },
+      { id: 'hothouse', name: 'Hothouse Triage',      headline: 'severe climate stress with partially resilient ecosystems', daily: 'constant emergency management, society always responding, resources perpetually diverted from development to recovery', fragility: 'every shock costs more than the last and the recovery curve gets steeper' },
+      { id: 'cascade',  name: 'Cascading Breakdown', headline: 'severe climate stress with an unraveling biosphere', daily: 'multiple systems failing at once, food instability across producing regions, mass migration', fragility: 'compound failures arrive faster than recovery, where overshoot and collapse lives in ecological terms' }
+    ]
+  }
+];
+
+// Canonical worlds — full descriptions from Nate's stack logic
+const canonical = {
+  'gs|civic|friend|workable': {
+    name: 'The Long Repair',
+    tagline: 'managed contraction · the aspirational path',
+    description: 'Material life is smaller. Fewer consumer goods. Less travel. Less energy per capita. But social life is richer. Community matters because people depend on each other in practical ways. Local governance matters because decisions are made closer to where their effects are felt. Skills matter because the economy rewards competence over credential. Work shifts toward repair, maintenance, food production, care. Less abstract, less financialized. There is real grief in this world for the possibilities that contraction forecloses, but a shared sense that the project is worth participating in.',
+    fragility: 'The hardest world to build and the easiest to lose. Its central requirement is sustained legitimacy during declining throughput. If a significant share of the population concludes the burden is not being shared fairly, trust collapses and this world slides toward Fortress or Unraveling. The historical track record of managing contraction democratically is not encouraging.',
+    embryo: 'Pockets exist already: transition towns, regional food networks, community land trusts, municipal energy cooperatives, repair cafes, certain Scandinavian social models under stress. The question is whether they can scale.',
+    plausibility: 'aspirational'
+  },
+  'mordor|captured|brittle|quiet': {
+    name: 'Mordor Persists',
+    tagline: 'familiar · comfortable for some · rotting underneath',
+    description: 'If you\'re in the top 20–30%, life feels busy, stimulated, materially comfortable, and vaguely anxious. Amazing technology, good healthcare, entertainment that is indistinguishable from meaning if you don\'t look too closely. But you sense something is off. You\'re working harder for what feels like less. If you\'re in the bottom 50–70%, life is precarious. You vote, but nothing changes. You\'re online a lot because it\'s the cheapest form of escape. There is a pervasive sense of unreality. Economic indicators say things are fine. Lived experience says they\'re not.',
+    fragility: 'Two things break this world. Brittle interdependence means a single chokepoint failure cascades globally. And quiet unraveling eventually undermines the material basis of the growth itself — soils only thin so far, fisheries only collapse once. The transition out of Mordor is the critical moment. With foresight it can move toward Long Repair. Without it, it slides toward Fortress or Unraveling.',
+    embryo: 'This is close to the current global default, particularly in the US and much of the West. GDP grows, markets function, technology advances, formal democratic institutions persist — but gains are captured, geopolitics are brittle, and the ecological foundations are degrading.',
+    plausibility: 'fragile'
+  },
+  'madmax|extract|coldwar|hothouse': {
+    name: 'Fortress World',
+    tagline: 'contraction meets authoritarian consolidation',
+    description: 'Controlled. Rationed. Surveilled. But not necessarily chaotic. There is a grim order. You know what you\'re allocated and what the rules are. Borders are hard. Movement is restricted. Some basic provision exists, because even authoritarian systems need a minimally functional population. The daily emotional texture is resignation and low-level fear. There are zones of comfort for those inside the power structure and zones of severe deprivation for those outside it. Geography matters enormously.',
+    fragility: 'Coercion is energetically expensive. Maintaining a fortress state under declining throughput is itself a thermodynamic challenge. The apparatus of surveillance, enforcement, and military projection all require energy that is increasingly scarce. The system must constantly choose between investing in control and investing in provision.',
+    embryo: 'Elements are already visible: surveillance states with managed provision, restricted movement during crisis periods, emergency powers that persist beyond the emergency, triage logic applied to populations during climate events.',
+    plausibility: 'fragile'
+  },
+  'madmax|extract|coldwar|cascade': {
+    name: 'The Unraveling',
+    tagline: 'coordination fails · the dark attractor',
+    description: 'Localized. Dangerous. Unpredictable. The radius of daily life shrinks. What matters is what\'s within walking or short driving distance. National and global events are rumors. Food is the central concern. Calories are not guaranteed. Violence is ambient. Health degrades. Without pharmaceutical supply chains, modern medicine retreats to what can be produced locally. But there is also community. Humans are social animals, and even in terrible conditions they form bonds, create governance, and find meaning. The worst part of this world is the absence of slack — every setback is potentially catastrophic because there are no buffers.',
+    fragility: 'The gravitational attractor when other systems fail. The Long Repair loses legitimacy. Mordor hits its ecological wall. Fortress can\'t sustain its coercion budget. Each failure pushes here. The question is not whether this happens everywhere — it probably doesn\'t. The question is how much of the world ends up here, and for how long.',
+    embryo: 'Visible in fragments: failed states, regions abandoned by central governments, post-conflict zones where local strongmen fill the vacuum.',
+    plausibility: 'unstable'
+  }
+};
+
+let selection = { econ: null, power: null, geo: null, earth: null };
+
+function renderBuilder() {
+  const html = `
+    <p class="builder-intro">Pick one option from each of the four lenses. The site composes a world from your stack. Some combinations are coherent. Some are unstable. Some are aspirational. The point is not to pick the right one — it's to feel the difference between one stack and another.</p>
+    <div class="builder">
+      ${dimensions.map(d => `
+        <div class="selector-card">
+          <h3>${d.id === 'econ' ? '01' : d.id === 'power' ? '02' : d.id === 'geo' ? '03' : '04'} / Lens</h3>
+          <div class="sel-name">${d.label}</div>
+          <div class="options">
+            ${d.options.map(o => `
+              <div class="opt" data-dim="${d.id}" data-opt="${o.id}">${o.name}</div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="builder-actions">
+      <button class="btn" id="randomize-btn">Randomize</button>
+      <button class="btn" id="reset-btn">Reset</button>
+    </div>
+    <div class="world-output empty" id="world-output">
+      Choose one from each lens above to compose your world.
+    </div>
+  `;
+  document.getElementById('ep3-content').innerHTML = html;
+
+  document.querySelectorAll('#ep3-content .opt').forEach(o => {
+    o.addEventListener('click', () => {
+      const dim = o.dataset.dim;
+      const opt = o.dataset.opt;
+      selection[dim] = opt;
+      document.querySelectorAll(`#ep3-content .opt[data-dim="${dim}"]`).forEach(x => x.classList.remove('active'));
+      o.classList.add('active');
+      composeWorld();
+    });
+  });
+
+  document.getElementById('randomize-btn').addEventListener('click', () => {
+    dimensions.forEach(d => {
+      const pick = d.options[Math.floor(Math.random() * d.options.length)];
+      selection[d.id] = pick.id;
+    });
+    document.querySelectorAll('#ep3-content .opt').forEach(o => {
+      o.classList.toggle('active', selection[o.dataset.dim] === o.dataset.opt);
+    });
+    composeWorld();
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    selection = { econ: null, power: null, geo: null, earth: null };
+    document.querySelectorAll('#ep3-content .opt').forEach(o => o.classList.remove('active'));
+    composeWorld();
+  });
+}
+
+function composeWorld() {
+  const out = document.getElementById('world-output');
+  const allPicked = Object.values(selection).every(v => v !== null);
+  if (!allPicked) {
+    const filled = Object.values(selection).filter(v => v !== null).length;
+    out.className = 'world-output empty';
+    out.innerHTML = filled === 0
+      ? 'Choose one from each lens above to compose your world.'
+      : `${filled} of 4 chosen. Pick the rest to compose your world.`;
+    return;
+  }
+  const key = `${selection.econ}|${selection.power}|${selection.geo}|${selection.earth}`;
+  const canon = canonical[key];
+
+  // Find chosen option objects
+  const chosen = {};
+  dimensions.forEach(d => {
+    chosen[d.id] = d.options.find(o => o.id === selection[d.id]);
+  });
+
+  let name, tagline, description, fragility, embryo, plausLabel, plausClass;
+
+  if (canon) {
+    name = canon.name;
+    tagline = canon.tagline + ' · canonical';
+    description = canon.description;
+    fragility = canon.fragility;
+    embryo = canon.embryo;
+    plausLabel = 'Canonical world from the series';
+    plausClass = 'canonical';
+  } else {
+    name = generateHybridName(selection);
+    tagline = 'a hybrid stack you composed';
+    description = `In this world, ${chosen.econ.headline}, while ${chosen.power.headline}. Internationally, ${chosen.geo.headline}. Underneath all of it, ${chosen.earth.headline}. Daily life: ${chosen.econ.daily}. ${chosen.power.daily.charAt(0).toUpperCase() + chosen.power.daily.slice(1)}. ${chosen.geo.daily.charAt(0).toUpperCase() + chosen.geo.daily.slice(1)}, while ${chosen.earth.daily}.`;
+    fragility = `${chosen.econ.fragility.charAt(0).toUpperCase() + chosen.econ.fragility.slice(1)}. ${chosen.power.fragility.charAt(0).toUpperCase() + chosen.power.fragility.slice(1)}. And ${chosen.geo.fragility}. Underneath, ${chosen.earth.fragility}.`;
+    embryo = null;
+    const check = plausibilityCheck(selection);
+    plausLabel = check.label;
+    plausClass = check.cls;
+  }
+
+  out.className = 'world-output';
+  const stack = `${chosen.econ.name.toUpperCase()} · ${chosen.power.name.toUpperCase()} · ${chosen.geo.name.toUpperCase()} · ${chosen.earth.name.toUpperCase()}`;
+  out.innerHTML = `
+    <div class="world-name">${name}</div>
+    <div class="world-stack">${stack}</div>
+    <div class="world-block">
+      <h4>What it feels like</h4>
+      <p>${description}</p>
+    </div>
+    <div class="world-block">
+      <h4>What makes it fragile</h4>
+      <p>${fragility}</p>
+    </div>
+    ${embryo ? `<div class="world-block"><h4>Where it exists today</h4><p>${embryo}</p></div>` : ''}
+    <div class="plausibility ${plausClass}">${plausLabel}</div>
+  `;
+}
+
+function generateHybridName(sel) {
+  // A few suggestive names for non-canonical hybrids
+  const econ = sel.econ, power = sel.power, geo = sel.geo, earth = sel.earth;
+  if (econ === 'green' && earth === 'workable') return 'The Bright Mirage';
+  if (econ === 'green' && earth === 'cascade') return 'The Late Bloom';
+  if (econ === 'green' && power === 'civic') return 'The Bend';
+  if (econ === 'mordor' && power === 'civic') return 'The Comfortable Lie';
+  if (econ === 'mordor' && earth === 'cascade') return 'The Fast Fall';
+  if (econ === 'gs' && power === 'extract') return 'The Imposed Simplification';
+  if (econ === 'gs' && geo === 'coldwar') return 'The Bunkered Repair';
+  if (econ === 'madmax' && power === 'civic') return 'The Improbable Commons';
+  if (econ === 'madmax' && earth === 'workable') return 'The Lost Garden';
+  if (econ === 'madmax' && geo === 'globi') return 'The Last Trade';
+  return 'A Hybrid World';
+}
+
+function plausibilityCheck(sel) {
+  // Gravity rules: some combinations are inherently unstable
+  // Growth + adversarial geopolitics is hard to sustain
+  if ((sel.econ === 'green' || sel.econ === 'mordor') && (sel.geo === 'coldwar' || sel.geo === 'brittle')) {
+    return { label: 'Fragile · growth needs functioning trade', cls: 'fragile' };
+  }
+  // Contraction + adversarial geo + civic ideal is the aspirational path
+  if ((sel.econ === 'gs' || sel.econ === 'madmax') && (sel.geo === 'coldwar' || sel.geo === 'brittle') && sel.power === 'civic') {
+    return { label: 'Aspirational · requires extraordinary leadership', cls: 'aspirational' };
+  }
+  // Cascading breakdown + civic ideal is hard to sustain
+  if (sel.earth === 'cascade' && sel.power === 'civic') {
+    return { label: 'Unstable · ecological crisis exhausts democratic capacity', cls: 'unstable' };
+  }
+  // Mordor + cascading is contradictory
+  if (sel.econ === 'mordor' && sel.earth === 'cascade') {
+    return { label: 'Contradictory · growth cannot survive cascading collapse', cls: 'unstable' };
+  }
+  // Green growth + cascading is contradictory
+  if (sel.econ === 'green' && sel.earth === 'cascade') {
+    return { label: 'Contradictory · regenerative growth cannot exist in this earth state', cls: 'unstable' };
+  }
+  // Mad Max + civic ideal is improbable
+  if (sel.econ === 'madmax' && sel.power === 'civic') {
+    return { label: 'Improbable · civic norms rarely survive Mad Max conditions', cls: 'unstable' };
+  }
+  // Stable composites
+  if (sel.econ === 'gs' && (sel.geo === 'globi' || sel.geo === 'friend') && sel.earth === 'workable') {
+    return { label: 'Stable · the conditions of a managed transition', cls: 'stable' };
+  }
+  return { label: 'A plausible composite', cls: 'stable' };
+}
+
+renderBuilder();
+
+// ============================================================
+// EPISODE 4: SHORTFALL & ROBUST ACTION
+// ============================================================
+document.getElementById('ep4-content').innerHTML = `
+<div class="prose">
+  <p class="lede">Not all losses are equal. Some can be rebuilt. Some cannot. Our dominant planning frameworks treat losses as fungible. They aren't. The asymmetry should reorganize how we plan.</p>
+</div>
+
+<div class="asymmetry-viz">
+  <h3>The math of losses and gains</h3>
+  <div class="caption">From a former Wall Street trader's first lesson</div>
+  <div class="asy-bars">
+    <div class="asy-row">
+      <span>Start</span>
+      <div class="asy-bar"><div class="asy-fill" style="width: 100%"></div></div>
+      <span class="asy-value">$100</span>
+    </div>
+    <div class="asy-row">
+      <span>Lose 50%</span>
+      <div class="asy-bar"><div class="asy-fill loss" style="width: 50%"></div></div>
+      <span class="asy-value">$50</span>
+    </div>
+    <div class="asy-row">
+      <span>Recover</span>
+      <div class="asy-bar"><div class="asy-fill" style="width: 100%"></div></div>
+      <span class="asy-value">$100</span>
+    </div>
+  </div>
+  <p style="font-family:var(--display);font-style:italic;font-size:18px;color:var(--text-muted);margin-top:18px;line-height:1.5;">To get back to a hundred dollars from fifty, you don't need a fifty percent gain. You need a hundred percent gain. Going down is cheap. Coming back up is expensive.</p>
+</div>
+
+<div class="prose">
+  <p>That's true in finance, and it's part of why most traders blow themselves up. It's much more true outside of finance, where most things are not even mathematically recoverable. You can't gain back a species. You can't double a topsoil. You can't earn back trust the way you earn back money.</p>
+</div>
+
+<div class="irrev-list">
+  <h3>Things that don't come back</h3>
+  <div class="irrev-grid">
+    <div class="irrev-item">Topsoil <span class="recovery">centuries to rebuild</span></div>
+    <div class="irrev-item">Aquifers <span class="recovery">millennia to refill</span></div>
+    <div class="irrev-item">Species <span class="recovery">extinction is forever</span></div>
+    <div class="irrev-item">Pollinators <span class="recovery">decades, often longer</span></div>
+    <div class="irrev-item">Social trust <span class="recovery">rebuilds slowly, breaks fast</span></div>
+    <div class="irrev-item">Institutional knowledge <span class="recovery">a generation at minimum</span></div>
+    <div class="irrev-item">Democratic norms <span class="recovery">very hard to recover once abandoned</span></div>
+    <div class="irrev-item">The nuclear taboo <span class="recovery">crossed only once</span></div>
+    <div class="irrev-item">Children's developmental windows <span class="recovery">close on a fixed timeline</span></div>
+    <div class="irrev-item">Personal health past thresholds <span class="recovery">progressive, often final</span></div>
+    <div class="irrev-item">Ecological corridors <span class="recovery">decades of restoration</span></div>
+    <div class="irrev-item">Oral and indigenous knowledge <span class="recovery">vanishes with the last speaker</span></div>
+  </div>
+</div>
+
+<div class="prose">
+  <p>The planning consequence: most institutional effort runs the opposite logic. It optimizes for short-term financial metrics, which are reversible, while allowing irreversible foundations to erode. The inversion this demands: spend disproportionate effort protecting the irreversible. Accept more risk on the reversible. Be willing to lose money to protect topsoil. Willing to lose efficiency to protect ecological corridors. Willing to lose comfort to preserve developmental environments for children.</p>
+</div>
+
+<div class="pullquote">"The question is not what's the ROI. The question is which of my actions protect something that can't be rebuilt."</div>
+
+<h2 class="section-h">A worksheet for sitting with this</h2>
+
+<div class="prose">
+  <p>The series ends with three handoff questions. They don't have right answers. They have honest answers. Use the space below to write yours. Nothing saves anywhere — this is between you and the page. Print it, screenshot it, or just sit with it.</p>
+</div>
+
+<div class="worksheet">
+  <h3>Three questions</h3>
+  <div class="ws-sub">From the close of the series</div>
+  <div class="ws-field">
+    <label>What are you protecting?</label>
+    <textarea placeholder="The things, people, places, knowledge, or relationships you most want to keep intact regardless of which world arrives."></textarea>
+  </div>
+  <div class="ws-field">
+    <label>What are you building?</label>
+    <textarea placeholder="The new things — skills, communities, infrastructure, ways of being — you are bringing into existence."></textarea>
+  </div>
+  <div class="ws-field">
+    <label>What are you willing to let go?</label>
+    <textarea placeholder="The expectations, possessions, identities, or futures you are ready to release."></textarea>
+  </div>
+  <div class="ws-note">This worksheet does not save. It is meant to be answered in the moment, then carried with you.</div>
+</div>
+`;
+
+// ============================================================
+// EPISODE 5: SPECTRUMS (self-assessment)
+// ============================================================
+const spectrums = [
+  { id: 's1', num: '01', title: 'Hedonism ↔ Purpose', left: 'Hedonism', right: 'Purpose', desc: 'Enjoying what is available while it is available, versus building meaning out of work that may not pay off in the timelines we wanted.' },
+  { id: 's2', num: '02', title: 'Grief ↔ Anger', left: 'Grief', right: 'Anger', desc: 'Mourning what is being lost, versus refusing to accept it and demanding accountability.' },
+  { id: 's3', num: '03', title: 'Protective ignorance ↔ Deep understanding', left: 'Ignorance', right: 'Understanding', desc: 'Looking away to preserve the bandwidth to function, versus knowing as much as possible even when it costs.' },
+  { id: 's4', num: '04', title: 'Local ↔ Planetary identity', left: 'Local', right: 'Planetary', desc: 'The watershed, the neighborhood, the people you can see, versus the species, the biosphere, the future generations.' },
+  { id: 's5', num: '05', title: 'Determinism ↔ Agency', left: 'Determinism', right: 'Agency', desc: 'The trajectory is set and individual action is marginal, versus constrained is very different from determined.' },
+  { id: 's6', num: '06', title: 'Withdrawal ↔ Engagement', left: 'Withdrawal', right: 'Engagement', desc: 'Stepping away to build parallel structures, versus staying inside existing institutions to bend them.' },
+  { id: 's7', num: '07', title: 'Isolation ↔ Community', left: 'Isolation', right: 'Community', desc: 'Carrying all of this alone, versus carrying it with other people. The dimension that runs underneath the other six.' }
+];
+
+const archetypes = [
+  {
+    name: 'The Quiet Builder',
+    profile: [80, 40, 80, 25, 75, 30, 80],
+    description: 'You carry purpose, mostly grief that has matured into resolve, deep understanding, a strong local orientation, real felt agency at the scale you can see, and a pull toward building outside the existing system. You are doing this with people, not alone. You build a homestead, teach your neighbors, plant trees, get to know the watershed. Quiet, focused, practical. Your work is unglamorous and matters.'
+  },
+  {
+    name: 'The Policy Fighter',
+    profile: [85, 75, 85, 80, 80, 85, 75],
+    description: 'You carry purpose, anger that is fuel rather than corrosion, deep understanding, a planetary scale of concern, strong agency, and a pull toward working inside institutions. You are surrounded by other people doing the same work. You write papers, give testimony, organize coalitions, push organizations to take the metacrisis seriously. Loud, frustrated, persistent. Your work is exhausting and matters.'
+  },
+  {
+    name: 'The Lonely Watchman',
+    profile: [80, 50, 90, 75, 50, 50, 25],
+    description: 'You carry purpose, deep understanding, planetary concern, and the burden of seeing clearly without enough company to share it. The information has not broken you, but it has isolated you. The most useful next move for you is probably not more information. It is finding people who hold what you hold, even just one or two, even online. The Lertzman finding applies here: care that has nowhere to go becomes heavy.'
+  },
+  {
+    name: 'The Peaceful Withdrawer',
+    profile: [25, 35, 45, 30, 35, 25, 75],
+    description: 'You have heard enough. You are living your life. You enjoy your garden and your relationships and you have made peace with not being able to change the big picture. You are doing this in community rather than alone, which is the difference between contentment and resignation. Your equanimity is real. Whether you are more or less helpful than the other archetypes is a different question — but you might be happier than any of them.'
+  },
+  {
+    name: 'The Reluctant Reformer',
+    profile: [70, 55, 70, 55, 60, 75, 60],
+    description: 'You sit roughly in the middle of most spectrums, with a tilt toward purpose, understanding, and engagement. You work inside institutions because you think they are not yet fully captured. You are tired of compromise but not tired enough to leave. Your contribution is the slow bending of structures from within, which is the least glamorous and arguably the most important kind of work.'
+  },
+  {
+    name: 'The Frozen Watcher',
+    profile: [70, 55, 95, 60, 30, 25, 30],
+    description: 'You see the situation with painful clarity, you are mostly carrying grief, but the agency dial has fallen and the engagement dial has fallen with it, and you are doing this mostly alone. This is a recognizable place — Renee Lertzman would call it environmental melancholia. The frozen state when care is so present it becomes immobilizing. The most useful move is rarely more information. It is movement of any kind, in any direction, with any other person.'
+  },
+  {
+    name: 'The Joyful Realist',
+    profile: [55, 45, 75, 55, 65, 60, 80],
+    description: 'You hold the full weight of what is happening and you are still finding meaning, still in community, still active, still capable of joy. You have arrived at something close to what Viktor Frankl called tragic optimism. You are not denying anything. You are also not letting the knowledge crowd out the rest of being alive. This is the rarest profile and probably the one most worth practicing toward.'
+  }
+];
+
+function renderSpectrums() {
+  const html = `
+    <div class="prose">
+      <p class="lede">The series is mostly about the future "out there." This is about the inside. After you absorb the scenarios, the lenses, the asymmetries — where do you actually sit? How are you carrying it?</p>
+      <p>What follows is seven sliders. Move each one to where you think you actually are right now, not where you think you should be. There are no right answers. The point is to notice your own posture and ask whether you chose it or drifted into it.</p>
+    </div>
+    <div class="spectrum-tool">
+      ${spectrums.map(s => `
+        <div class="spectrum-row">
+          <div class="spec-header">
+            <span class="spec-num">${s.num}</span>
+            <span class="spec-title">${s.title}</span>
+          </div>
+          <div class="spec-poles">
+            <span class="left">← ${s.left}</span>
+            <span class="right">${s.right} →</span>
+          </div>
+          <input type="range" min="0" max="100" value="50" class="spec-slider" data-id="${s.id}">
+          <p style="font-size:13px;font-family:var(--body);font-style:italic;color:var(--text-dim);margin-top:10px;line-height:1.5;">${s.desc}</p>
+        </div>
+      `).join('')}
+    </div>
+    <div class="spectrum-actions">
+      <button class="btn primary" id="analyze-btn">Show me my profile</button>
+    </div>
+    <div class="spectrum-output" id="spectrum-output"></div>
+  `;
+  document.getElementById('ep5-content').innerHTML = html;
+
+  document.getElementById('analyze-btn').addEventListener('click', analyzeProfile);
+}
+
+function analyzeProfile() {
+  const values = spectrums.map(s => {
+    const el = document.querySelector(`[data-id="${s.id}"]`);
+    return parseInt(el.value, 10);
+  });
+  // Find closest archetype by Euclidean distance
+  let best = null, bestDist = Infinity;
+  archetypes.forEach(arch => {
+    const dist = Math.sqrt(arch.profile.reduce((acc, v, i) => acc + Math.pow(v - values[i], 2), 0));
+    if (dist < bestDist) { bestDist = dist; best = arch; }
+  });
+
+  const out = document.getElementById('spectrum-output');
+  out.classList.add('visible');
+  out.innerHTML = `
+    <div class="profile-name">${best.name}</div>
+    <div class="profile-tag">CLOSEST ARCHETYPE · this is a tool, not a verdict</div>
+    <div class="profile-body">
+      <p>${best.description}</p>
+    </div>
+    <div class="profile-prompts">
+      <h4>Sit with these</h4>
+      <ol>
+        <li>Almost everything we mistake for apathy in other people, and in ourselves, is overwhelmed care. Where in your profile is care getting stuck rather than moving?</li>
+        <li>Is this the profile you would consciously choose? Or is it the one your nervous system defaulted to over the last few years?</li>
+        <li>Which one of the seven sliders, if you nudged it deliberately by ten points in the next month, would change the most about how you carry this?</li>
+      </ol>
+    </div>
+  `;
+  out.scrollIntoView && out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+renderSpectrums();
+
+// ============================================================
+// SOURCES
+// ============================================================
+document.getElementById('sources-content').innerHTML = `
+<div class="prose">
+  <p class="lede">The series sits inside a long tradition of thinking about complex systems, scenarios, and the human predicament. These are the threads behind it. None of this is exhaustive — it's a starting point for the curious.</p>
+</div>
+
+<div class="sources-group">
+  <h3>The scenario planning lineage</h3>
+  <div class="source-item"><span class="src-author">Pierre Wack</span>, "Scenarios: Uncharted Waters Ahead" and "Shooting the Rapids" — <span class="src-meta">Harvard Business Review, 1985. The founding texts of modern scenario planning at Royal Dutch Shell.</span></div>
+  <div class="source-item"><span class="src-author">Peter Schwartz</span>, <span class="src-title">The Art of the Long View</span> — <span class="src-meta">Doubleday, 1991. The accessible introduction.</span></div>
+  <div class="source-item"><span class="src-author">Kees van der Heijden</span>, <span class="src-title">Scenarios: The Art of Strategic Conversation</span> — <span class="src-meta">Wiley, 1996. Scenarios as organizational learning.</span></div>
+  <div class="source-item"><span class="src-author">Angela Wilkinson &amp; Roland Kupers</span>, <span class="src-title">The Essence of Scenarios: Learning from the Shell Experience</span> — <span class="src-meta">Amsterdam University Press, 2014. The honest reckoning with what Shell scenarios actually accomplished.</span></div>
+  <div class="source-item"><span class="src-author">Jim Dator</span>, "Alternative Futures at the Manoa School" — <span class="src-meta">Journal of Futures Studies, 2009. The four generic futures: Continuation, Collapse, Discipline, Transform.</span></div>
+  <div class="source-item"><span class="src-author">Adam Kahane</span>, <span class="src-title">Transformative Scenario Planning</span> — <span class="src-meta">Berrett-Koehler, 2012. Scenarios as instruments of social change, descended from the Mont Fleur exercise in South Africa.</span></div>
+</div>
+
+<div class="sources-group">
+  <h3>The biophysical foundation</h3>
+  <div class="source-item"><span class="src-author">Donella Meadows et al.</span>, <span class="src-title">The Limits to Growth</span> — <span class="src-meta">Universe Books, 1972. The book this whole series descends from.</span></div>
+  <div class="source-item"><span class="src-author">Donella Meadows, Jorgen Randers, Dennis Meadows</span>, <span class="src-title">Limits to Growth: The 30-Year Update</span> — <span class="src-meta">Chelsea Green, 2004.</span></div>
+  <div class="source-item"><span class="src-author">Gaya Herrington</span>, "Update to Limits to Growth" — <span class="src-meta">Journal of Industrial Ecology, 2021. Empirical comparison of World3 scenarios to actual data. The closest fits are the BAU2 (pollution-driven decline) and CT (Comprehensive Technology) pathways.</span></div>
+  <div class="source-item"><span class="src-author">David Holmgren</span>, <span class="src-title">Future Scenarios: How Communities Can Adapt to Peak Oil and Climate Change</span> — <span class="src-meta">Chelsea Green, 2009. The closest direct ancestor of this series's stack architecture. Holmgren's four worlds (Green Tech, Brown Tech, Earth Stewards, Lifeboats) prefigure Long Repair, Mordor, and Unraveling.</span></div>
+  <div class="source-item"><span class="src-author">Vaclav Smil</span>, <span class="src-title">How the World Really Works</span> — <span class="src-meta">Viking, 2022. Energy realism without scenarios.</span></div>
+  <div class="source-item"><span class="src-author">Joseph Tainter</span>, <span class="src-title">The Collapse of Complex Societies</span> — <span class="src-meta">Cambridge University Press, 1988. The foundational text on diminishing returns to complexity.</span></div>
+</div>
+
+<div class="sources-group">
+  <h3>Polycrisis and metacrisis</h3>
+  <div class="source-item"><span class="src-author">Adam Tooze</span>, "Welcome to the World of Polycrisis" — <span class="src-meta">Financial Times, October 2022. The piece that put the term in circulation.</span></div>
+  <div class="source-item"><span class="src-author">Michael Lawrence, Thomas Homer-Dixon, Scott Janzwood et al.</span>, "Global polycrisis: The causal mechanisms of crisis entanglement" — <span class="src-meta">Cascade Institute / Global Sustainability, 2024. Three causal mechanisms: common stresses, domino effects, inter-systemic feedbacks.</span></div>
+  <div class="source-item"><span class="src-author">Daniel Schmachtenberger</span>, on the three generator functions of existential risk — <span class="src-meta">Various interviews and Consilience Project essays. Rivalrous dynamics, substrate degradation, exponential technology outpacing governance.</span></div>
+  <div class="source-item"><span class="src-author">Iain McGilchrist</span>, <span class="src-title">The Matter With Things</span> — <span class="src-meta">Perspectiva Press, 2021. The hemisphere hypothesis many metacrisis thinkers cite.</span></div>
+</div>
+
+<div class="sources-group">
+  <h3>Tipping points and the adaptive cycle</h3>
+  <div class="source-item"><span class="src-author">C. S. (Buzz) Holling</span> and <span class="src-author">Lance Gunderson</span>, <span class="src-title">Panarchy</span> — <span class="src-meta">Island Press, 2002. The adaptive cycle as the natural shape of complex systems through growth, conservation, release, and reorganization.</span></div>
+  <div class="source-item"><span class="src-author">David Armstrong McKay, Tim Lenton et al.</span>, "Exceeding 1.5°C global warming could trigger multiple climate tipping points" — <span class="src-meta">Science, 2022. Sixteen tipping elements identified, five already past minimum thresholds at current warming.</span></div>
+  <div class="source-item"><span class="src-author">Johan Rockström, Will Steffen et al.</span>, planetary boundaries updates — <span class="src-meta">Stockholm Resilience Centre, 2009 and 2023. Six of nine boundaries now transgressed.</span></div>
+  <div class="source-item"><span class="src-author">John Michael Greer</span>, <span class="src-title">The Long Descent</span> — <span class="src-meta">New Society Publishers, 2008. Catabolic collapse as the realistic alternative to a single apocalyptic event.</span></div>
+  <div class="source-item"><span class="src-author">Ugo Bardi</span>, <span class="src-title">The Seneca Effect</span> — <span class="src-meta">Springer, 2017. Why growth is slow but ruin is rapid.</span></div>
+</div>
+
+<div class="sources-group">
+  <h3>The psychology of carrying it</h3>
+  <div class="source-item"><span class="src-author">Joanna Macy</span> and <span class="src-author">Chris Johnstone</span>, <span class="src-title">Active Hope</span> — <span class="src-meta">New World Library, 2012, revised 2022. Hope as a practice rather than a feeling. Macy died in July 2025.</span></div>
+  <div class="source-item"><span class="src-author">Renee Lertzman</span>, <span class="src-title">Environmental Melancholia</span> — <span class="src-meta">Routledge, 2015. The myth of apathy: what looks like indifference is almost always frozen care.</span></div>
+  <div class="source-item"><span class="src-author">Per Espen Stoknes</span>, <span class="src-title">What We Think About When We Try Not to Think About Global Warming</span> — <span class="src-meta">Chelsea Green, 2015. Five barriers: Distance, Doom, Dissonance, Denial, iDentity.</span></div>
+  <div class="source-item"><span class="src-author">Glenn Albrecht</span>, <span class="src-title">Earth Emotions</span> — <span class="src-meta">Cornell University Press, 2019. Solastalgia, soliphilia, and the psychoterratic taxonomy.</span></div>
+  <div class="source-item"><span class="src-author">Sarah Jaquette Ray</span>, <span class="src-title">A Field Guide to Climate Anxiety</span> — <span class="src-meta">University of California Press, 2020.</span></div>
+  <div class="source-item"><span class="src-author">Britt Wray</span>, <span class="src-title">Generation Dread</span> — <span class="src-meta">Knopf, 2022. The reproductive and generational dimension of climate emotion.</span></div>
+  <div class="source-item"><span class="src-author">Viktor Frankl</span>, <span class="src-title">Man's Search for Meaning</span> — <span class="src-meta">Beacon Press, 1946. The 1984 postscript introduces tragic optimism.</span></div>
+  <div class="source-item"><span class="src-author">Ernest Becker</span>, <span class="src-title">The Denial of Death</span> — <span class="src-meta">Free Press, 1973. The intellectual root of Terror Management Theory.</span></div>
+</div>
+
+<div class="sources-group">
+  <h3>Adjacent worldviews worth knowing</h3>
+  <div class="source-item"><span class="src-author">Jem Bendell</span>, <span class="src-title">Breaking Together</span> — <span class="src-meta">Good Works, 2023. The Deep Adaptation framework, with the 5 Rs: Resilience, Relinquishment, Restoration, Reconciliation, Reclamation.</span></div>
+  <div class="source-item"><span class="src-author">Kim Stanley Robinson</span>, <span class="src-title">The Ministry for the Future</span> — <span class="src-meta">Orbit, 2020. A scenario exercise in novel form.</span></div>
+  <div class="source-item"><span class="src-author">Tim Jackson</span>, <span class="src-title">Post Growth: Life After Capitalism</span> — <span class="src-meta">Polity, 2021.</span></div>
+  <div class="source-item"><span class="src-author">Kate Raworth</span>, <span class="src-title">Doughnut Economics</span> — <span class="src-meta">Chelsea Green, 2017.</span></div>
+  <div class="source-item"><span class="src-author">Jason Hickel</span>, <span class="src-title">Less Is More</span> — <span class="src-meta">Penguin Random House, 2020.</span></div>
+  <div class="source-item"><span class="src-author">Paul Kingsnorth &amp; Dougald Hine</span>, the Dark Mountain Project manifesto — <span class="src-meta">Dark Mountain, 2009. Uncivilised writing for the end of progress narratives.</span></div>
+  <div class="source-item"><span class="src-author">Rob Hopkins</span>, <span class="src-title">The Transition Handbook</span> — <span class="src-meta">Green Books, 2008. Energy descent as community practice.</span></div>
+</div>
+
+<div class="sources-group">
+  <h3>Nate's own work</h3>
+  <div class="source-item"><span class="src-author">Nate Hagens</span>, <span class="src-title">Reality Blind</span> (with DJ White) — <span class="src-meta">2021. The book-length argument for the superorganism framing.</span></div>
+  <div class="source-item"><span class="src-author">The Great Simplification</span> — <span class="src-meta">The full podcast and Frankly archive, including the four episodes this site is companion to. <a href="https://www.thegreatsimplification.com" target="_blank" rel="noopener" style="color:var(--gold);">thegreatsimplification.com</a></span></div>
+</div>
+`;
+</script>
+
+</body>
+</html>
